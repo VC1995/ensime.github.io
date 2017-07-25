@@ -22,7 +22,7 @@ If you are looking for a small task to pick up, have a look at our [latest miles
 
 Anything with the **Low Hanging Fruit** or **Needs Reproduction** labels are suitable for a new contributor. Please contact us on the github issue directly if you want to contribute something: this avoids duplication of efforts, and also lets us discuss the best way to do it.
 
-We have regular [Hack Days in London](http://hackthetower.co.uk/). If you can set aside the time to join us, they are a fun and exciting way to contribute to ENSIME.
+If you still don't know, join the conversation at [gitter.im/ensime/ensime-server](https://gitter.im/ensime/ensime-server).
 
 If you can't come to a hack day but you'd really like to have some live help from somebody, please ask. We can use the libre software [meet.jit.si](https://meet.jit.si/) to screen share and discuss tickets anytime that is convenient.
 
@@ -70,9 +70,13 @@ with example JSON payloads in [org/ensime/jerky](https://github.com/ensime/ensim
 
 ### Compiling and Tests
 
-Make sure you have 0.13.13+ of the `sbt` start script, otherwise project compilation will fail with a `java.lang.OutOfMemoryError` or `java.lang.StackOverflowError`.
+Setting up `sbt` and `jenv` is documented in [Learning Scala](/learning_scala).
 
-Before you start, run this sbt command on your `ensime-server` repository as the `.ensime` file is required to run the integration tests (even if you are not using ENSIME to hack on ENSIME).
+- without the `sbt` 0.13.13+ official start script (**not** the short bash script), project compilation will fail.
+- without `jenv` the tests will fail to pass: we require more knowledge about JDK than typical projects.
+- you must install the JDK sources (`src.zip`) with your OS package manager.
+
+Before you start, run this sbt command on your `ensime-server` repository as the `.ensime` file is required by the integration tests (even if you are not using ENSIME to hack on ENSIME).
 
 ```
 sbt ensimeConfig
@@ -83,6 +87,15 @@ Don't forget to compile the integration tests as well as the tests, e.g.
 ```
 sbt test:compile it:compile
 ```
+
+The integration tests will be very slow unless you generate a cache.
+
+
+```
+cd testing/cache && sbt ++2.12.2 ensimeConfig ensimeServerIndex && cd ../..
+```
+
+This must be repeated if you change anything that will impact the indexing (e.g. anything in `SearchService` or its dependencies).
 
 The `.drone.yml` file documents the exact commands that we use during our CI and should serve as a good reference.
 
