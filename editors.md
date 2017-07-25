@@ -65,4 +65,3 @@ The following chart describes how well ENSIME supports each editor:
 | [Show implementations] |                           |                        |                     |                     |                           |
 | [Advanced type search] |                           |                        |                     |                     |                           |
 | [Passive suggestions]  |                           |                        |                     |                     |                           |
-| [Whitebox macros]      |                           |                        |                     |                     |                           |
